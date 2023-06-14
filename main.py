@@ -210,7 +210,7 @@ trainer = Trainer(
     compute_metrics=compute_metrics,
     data_collator=collate_fn,
 )
-train_results = trainer.train()
+train_results = trainer.train(resume_from_checkpoint=True)
 
 
 trainer.evaluate(val_ds)
