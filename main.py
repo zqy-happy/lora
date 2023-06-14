@@ -6,6 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-lr', "--lr", help="learning rate", type=float, default='0.005')
+parser.add_argument('-cp', "--checkpoint", help="check point", type=bool)
 args = parser.parse_args()
 
 print(f"Transformers version: {transformers.__version__}")
@@ -210,7 +211,7 @@ trainer = Trainer(
     compute_metrics=compute_metrics,
     data_collator=collate_fn,
 )
-train_results = trainer.train(resume_from_checkpoint=True)
+train_results = trainer.train(resume_from_checkpoint=args.checkpoint)
 
 
 trainer.evaluate(val_ds)
