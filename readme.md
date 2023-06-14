@@ -4,8 +4,7 @@ conda env create -f environment.yml
 
 2.conda activate pytorch   
 
-3.  
-
+3.  运行
 python pre_dataset.py   
 用来下载数据集，其中数据集将存储在 ./datasets/food101  
 python main.py -lr 0.005 >> main.log  
