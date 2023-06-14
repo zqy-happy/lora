@@ -158,6 +158,7 @@ batch_size = 128
 
 train_args = TrainingArguments(
     f"{model_name}-finetuned-lora-food101",
+    output_dir = './checkpoint_'+ args.lr
     remove_unused_columns=False,
     evaluation_strategy="epoch",
     save_strategy="epoch",
