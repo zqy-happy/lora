@@ -199,8 +199,6 @@ def collate_fn(examples):
 
 
 
-# %%
-lora_model.load_state_dict(torch.load(f"./pretraining_model/{args.lr}_huggingface_lora_model.pth"))
 
 # %%
 trainer = Trainer(
@@ -216,8 +214,12 @@ train_results = trainer.train()
 
 
 trainer.evaluate(val_ds)
-
-
+import os
+if os.path.exists("./pretraining_model"):
+    torch.save(lora_model.state_dict,f"./pretraining_model/{args.lr}_huggingface_lora_model.pth")
+else:
+    os.mkdir("./pretraining_model")
+    torch.save(lora_model.state_dict,f"./pretraining_model/{args.lr}_huggingface_lora_model.pth")
 
 
 
