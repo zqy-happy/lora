@@ -3,6 +3,7 @@ import transformers
 import accelerate
 import peft
 import argparse
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-lr', "--lr", help="learning rate", type=float, default='0.005')
@@ -156,6 +157,8 @@ from transformers import TrainingArguments, Trainer
 model_name = model_checkpoint.split("/")[-1]
 batch_size = 128
 
+if not os.path.exists('./checkpoint_'+ args.lr):
+    os.mkdir('./checkpoint_'+ args.lr)
 train_args = TrainingArguments(
     f"{model_name}-finetuned-lora-food101",
     output_dir = './checkpoint_'+ args.lr
@@ -216,8 +219,8 @@ train_results = trainer.train(resume_from_checkpoint=args.checkpoint)
 
 
 trainer.evaluate(val_ds)
-import os
-if os.path.exists("./pretraining_model"):
+
+if not os.path.exists("./pretraining_model"):
     torch.save(lora_model.state_dict,f"./pretraining_model/{args.lr}_huggingface_lora_model.pth")
 else:
     os.mkdir("./pretraining_model")
