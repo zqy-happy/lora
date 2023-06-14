@@ -155,7 +155,7 @@ from transformers import TrainingArguments, Trainer
 model_name = model_checkpoint.split("/")[-1]
 batch_size = 128
 
-args = TrainingArguments(
+train_args = TrainingArguments(
     f"{model_name}-finetuned-lora-food101",
     remove_unused_columns=False,
     evaluation_strategy="epoch",
@@ -205,7 +205,7 @@ lora_model.load_state_dict(torch.load(f"./pretraining_model/{args.lr}_huggingfac
 # %%
 trainer = Trainer(
     lora_model,
-    args,
+    train_args,
     train_dataset=train_ds,
     eval_dataset=val_ds,
     tokenizer=image_processor,
