@@ -2,7 +2,7 @@
 conda env create -f environment.yml
 会生成一个 pytorch的conda环境
 
-2.conda activate pytorch
+2.conda activate pytorch   
 
 3.
 python pre_dataset.py
