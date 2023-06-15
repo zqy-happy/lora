@@ -157,11 +157,11 @@ from transformers import TrainingArguments, Trainer
 model_name = model_checkpoint.split("/")[-1]
 batch_size = 128
 
-if not os.path.exists('./checkpoint_'+ args.lr):
-    os.mkdir('./checkpoint_'+ args.lr)
+if not os.path.exists('./checkpoint_lr='+ str(args.lr)):
+    os.mkdir('./checkpoint_lr='+ str(args.lr))
 train_args = TrainingArguments(
-    f"{model_name}-finetuned-lora-food101",
-    output_dir = './checkpoint_'+ args.lr,
+    #f"{model_name}-finetuned-lora-food101",
+    output_dir = './checkpoint_lr='+ str(args.lr),
     remove_unused_columns=False,
     evaluation_strategy="epoch",
     save_strategy="epoch",
