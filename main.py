@@ -8,6 +8,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('-lr', "--lr", help="learning rate", type=float, default='0.005')
 parser.add_argument('-cp', "--checkpoint", help="check point", type=bool)
+parser.add_argument('-ls', "--lr_scheduler", help="lr_scheduler", type=str,default = 'cosine')
 args = parser.parse_args()
 
 print(f"Transformers version: {transformers.__version__}")
@@ -49,8 +50,7 @@ for i, label in enumerate(labels):
     label2id[label] = i
     id2label[i] = label
 
-id2label[2]
-#"baklava"
+
 
 # %%
 from transformers import AutoImageProcessor
@@ -143,8 +143,6 @@ config = LoraConfig(
 )
 
 
-# %%
-print(model)
 
 # %%
 lora_model = get_peft_model(model,config)
@@ -161,11 +159,12 @@ if not os.path.exists('./checkpoint_lr='+ str(args.lr)):
     os.mkdir('./checkpoint_lr='+ str(args.lr))
 train_args = TrainingArguments(
     #f"{model_name}-finetuned-lora-food101",
-    output_dir = './checkpoint_lr='+ str(args.lr),
+    output_dir = f'./checkpoint_lr={args.lr}_ls={args.lr_scheduler}',
     remove_unused_columns=False,
     evaluation_strategy="epoch",
     save_strategy="epoch",
     learning_rate=args.lr,
+    lr_scheduler_type= args.lr_scheduler,
     per_device_train_batch_size=batch_size,
     gradient_accumulation_steps=4,
     per_device_eval_batch_size=batch_size,
@@ -221,10 +220,10 @@ train_results = trainer.train(resume_from_checkpoint=args.checkpoint)
 trainer.evaluate(val_ds)
 
 if not os.path.exists("./pretraining_model"):
-    torch.save(lora_model.state_dict,f"./pretraining_model/{args.lr}_huggingface_lora_model.pth")
+    torch.save(lora_model.state_dict,f"./pretraining_model/lr={args.lr}_ls={args.lr_scheduler}_huggingface_lora_model.pth")
 else:
     os.mkdir("./pretraining_model")
-    torch.save(lora_model.state_dict,f"./pretraining_model/{args.lr}_huggingface_lora_model.pth")
+    torch.save(lora_model.state_dict,f"./pretraining_model/lr={args.lr}_ls={args.lr_scheduler}_huggingface_lora_model.pth")
 
 
 
