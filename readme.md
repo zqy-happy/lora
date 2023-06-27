@@ -1,6 +1,6 @@
 - please modify the last line of file 'environment.yml' with your own conda path.
 - run "conda env create -f environment.yml"  
-- it will create a conda environment called "pytorch"   
+ it will create a conda environment called "pytorch"   
 
 - run "conda activate pytorch"  
 
