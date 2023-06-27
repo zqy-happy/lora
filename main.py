@@ -219,7 +219,7 @@ train_results = trainer.train(resume_from_checkpoint=args.checkpoint)
 
 trainer.evaluate(val_ds)
 
-if not os.path.exists("./pretraining_model"):
+if os.path.exists("./pretraining_model"):
     torch.save(lora_model.state_dict,f"./pretraining_model/lr={args.lr}_ls={args.lr_scheduler}_huggingface_lora_model.pth")
 else:
     os.mkdir("./pretraining_model")
