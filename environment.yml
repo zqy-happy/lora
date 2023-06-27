@@ -250,4 +250,4 @@ dependencies:
     - xxhash==3.2.0
     - yarl==1.9.2
     - zipp==3.10.0
-prefix: /home/zhaoqy/miniconda3/envs/pytorch
+prefix: /home/[user]/miniconda3/envs/pytorch
